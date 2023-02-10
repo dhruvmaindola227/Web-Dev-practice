@@ -37,6 +37,9 @@ type Inputs = {
   firstname: string;
   lastname: string;
   address: string;
+  female: string;
+  male: string;
+  other: string;
   exampleRequired: string;
 };
 
@@ -203,7 +206,6 @@ export default function PersistentDrawerLeft() {
               <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
                 name="radio-buttons-group"
                 row
               >
@@ -211,16 +213,19 @@ export default function PersistentDrawerLeft() {
                   value="female"
                   control={<Radio />}
                   label="Female"
+                  {...register("female")}
                 />
                 <FormControlLabel
                   value="male"
                   control={<Radio />}
                   label="Male"
+                  {...register("male")}
                 />
                 <FormControlLabel
                   value="other"
                   control={<Radio />}
                   label="Other"
+                  {...register("other")}
                 />
               </RadioGroup>
             </FormControl>
