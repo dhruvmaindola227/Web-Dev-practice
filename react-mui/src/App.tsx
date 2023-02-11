@@ -2,9 +2,9 @@ import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
+import {Drawer} from "@mui/material/";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -43,69 +43,11 @@ type Inputs = {
   exampleRequired: string;
 };
 
-const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-  open?: boolean;
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create("margin", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  }),
-}));
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
-
 export default function PersistentDrawerLeft() {
   const departments = [{ label: "HR" }, { label: "IT" }, { label: "FINANCE" }];
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const {
     register,
     handleSubmit,
@@ -115,138 +57,141 @@ export default function PersistentDrawerLeft() {
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Login Form
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Stack
+        spacing={3}
+        marginLeft={"50px"}
+        marginRight={"50px"}
+        marginTop={"30px"}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-
-        {/* ----------------------------------------------------------- */}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack
-            spacing={3}
-            marginLeft={"50px"}
-            marginRight={"50px"}
-            marginTop={"30px"}
+        
+        <Stack spacing={2} direction="row" marginTop={"50px"}>
+          <TextField
+            {...register("firstname")}
+            variant="outlined"
+            label={"First Name"}
+            fullWidth
+          ></TextField>
+          <TextField
+            variant="outlined"
+            label={"Last Name"}
+            fullWidth
+            {...register("lastname")}
+          ></TextField>
+        </Stack>
+        <TextField
+          variant="outlined"
+          label={"Address"}
+          {...register("address")}
+        ></TextField>
+        <FormControl>
+          <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            name="radio-buttons-group"
+            row
           >
-            <Stack spacing={2} direction="row" marginTop={"50px"}>
-              <TextField
-                {...register("firstname")}
-                variant="outlined"
-                label={"First Name"}
-                fullWidth
-              ></TextField>
-              <TextField
-                variant="outlined"
-                label={"Last Name"}
-                fullWidth
-                {...register("lastname")}
-              ></TextField>
-            </Stack>
-            <TextField
-              variant="outlined"
-              label={"Address"}
-              {...register("address")}
-            ></TextField>
-            <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
-                row
-              >
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                  {...register("female")}
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                  {...register("male")}
-                />
-                <FormControlLabel
-                  value="other"
-                  control={<Radio />}
-                  label="Other"
-                  {...register("other")}
-                />
-              </RadioGroup>
-            </FormControl>
-
-            <Autocomplete
-              disablePortal
-              fullWidth
-              id="combo-box-demo"
-              options={departments}
-              renderInput={(params) => (
-                <TextField {...params} label="Departments" />
-              )}
+            <FormControlLabel
+              value="female"
+              control={<Radio />}
+              label="Female"
+              {...register("female")}
             />
-            <Typography variant={"h6"}>Favourite subject</Typography>
-            <FormGroup row>
-              <FormControlLabel control={<Checkbox />} label="ReactJs" />
-              <FormControlLabel control={<Checkbox />} label="Java" />
-            </FormGroup>
-            <Button variant="contained" type="submit">
-              Submit
-            </Button>
-          </Stack>
-        </form>
-      </Main>
-    </Box>
+            <FormControlLabel
+              value="male"
+              control={<Radio />}
+              label="Male"
+              {...register("male")}
+            />
+            <FormControlLabel
+              value="other"
+              control={<Radio />}
+              label="Other"
+              {...register("other")}
+            />
+          </RadioGroup>
+        </FormControl>
+
+        <Autocomplete
+          disablePortal
+          fullWidth
+          id="combo-box-demo"
+          options={departments}
+          renderInput={(params) => (
+            <TextField {...params} label="Departments" />
+          )}
+        />
+        <Typography variant={"h6"}>Favourite subject</Typography>
+        <FormGroup row>
+          <FormControlLabel control={<Checkbox />} label="ReactJs" />
+          <FormControlLabel control={<Checkbox />} label="Java" />
+        </FormGroup>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
+      </Stack>
+    </form>
+
+    // <Box sx={{ display: "flex" }}>
+    //   <CssBaseline />
+    //   <AppBar position="fixed" open={open}>
+    //     <Toolbar>
+    //       <IconButton
+    //         color="inherit"
+    //         aria-label="open drawer"
+    //         onClick={handleDrawerOpen}
+    //         edge="start"
+    //         sx={{ mr: 2, ...(open && { display: "none" }) }}
+    //       >
+    //         <MenuIcon />
+    //       </IconButton>
+    //       <Typography variant="h6" noWrap component="div">
+    //         Login Form
+    //       </Typography>
+    //     </Toolbar>
+    //   </AppBar>
+    //   <Drawer
+    //     sx={{
+    //       width: drawerWidth,
+    //       flexShrink: 0,
+    //       "& .MuiDrawer-paper": {
+    //         width: drawerWidth,
+    //         boxSizing: "border-box",
+    //       },
+    //     }}
+    //     variant="persistent"
+    //     anchor="left"
+    //     open={open}
+    //   >
+    //     <DrawerHeader>
+    //       <IconButton onClick={handleDrawerClose}>
+    //         {theme.direction === "ltr" ? (
+    //           <ChevronLeftIcon />
+    //         ) : (
+    //           <ChevronRightIcon />
+    //         )}
+    //       </IconButton>
+    //     </DrawerHeader>
+    //     <Divider />
+    //     <List>
+    //       {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+    //         <ListItem key={text} disablePadding>
+    //           <ListItemButton>
+    //             <ListItemIcon>
+    //               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+    //             </ListItemIcon>
+    //             <ListItemText primary={text} />
+    //           </ListItemButton>
+    //         </ListItem>
+    //       ))}
+    //     </List>
+    //   </Drawer>
+    //   <Main open={open}>
+    //     <DrawerHeader />
+
+    // {/* ----------------------------------------------------------- */}
+
+    //   </Main>
+    // </Box>
   );
 }
