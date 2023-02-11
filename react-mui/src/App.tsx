@@ -40,6 +40,7 @@ export default function PersistentDrawerLeft() {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
@@ -75,30 +76,31 @@ export default function PersistentDrawerLeft() {
         <FormControl >
           <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
           <RadioGroup
-            {...register("gender", {
-              setValueAs: (g:any) => gender,
-            })}
             aria-labelledby="demo-radio-buttons-group-label"
             name="radio-buttons-group"
             row
             value={gender}
-            onSelect={() => setSelected(true)}
             onChange={handleChange}
           >
             <FormControlLabel
               value="female"
               control={<Radio />}
               label="Female"
+              onClick={() => {
+                setValue("gender", gender)
+              }}
             />
             <FormControlLabel
               value="male"
               control={<Radio />}
               label="Male"
+              onClick={() => setValue("gender", gender)}
             />
             <FormControlLabel
               value="other"
               control={<Radio />}
               label="Other" 
+              onClick={() => setValue("gender", gender)}
             />
           </RadioGroup>
         </FormControl>
