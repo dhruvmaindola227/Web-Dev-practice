@@ -129,7 +129,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Submission Form
+            Login Form
           </Typography>
         </Toolbar>
       </AppBar>
@@ -175,14 +175,11 @@ export default function PersistentDrawerLeft() {
         {/* ----------------------------------------------------------- */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack
-            spacing={1.5}
+            spacing={3}
             marginLeft={"50px"}
             marginRight={"50px"}
-            marginTop={"50px"}
+            marginTop={"30px"}
           >
-            <Typography align="center" variant={"h5"}>
-              Login form
-            </Typography>
             <Stack spacing={2} direction="row" marginTop={"50px"}>
               <TextField
                 {...register("firstname")}
