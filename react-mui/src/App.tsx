@@ -82,6 +82,7 @@ export default function PersistentDrawerLeft() {
             value={gender}
             onChange={handleChange}
           >
+
             <FormControlLabel
               value="female"
               control={<Radio />}
@@ -89,7 +90,9 @@ export default function PersistentDrawerLeft() {
               onClick={() => {
                 setValue("gender", gender)
               }}
-            />
+
+            
+            
             <FormControlLabel
               value="male"
               control={<Radio />}
