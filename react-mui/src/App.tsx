@@ -90,7 +90,7 @@ export default function PersistentDrawerLeft() {
               onClick={() => {
                 setValue("gender", gender)
               }}
-
+              />
             
             
             <FormControlLabel
