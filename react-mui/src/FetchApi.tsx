@@ -23,25 +23,35 @@ function  FetchApi() {
     // console.log(data);
     
     return (
-        <div>
+        <Stack alignItems={'center'} direction={'row'} spacing={3} mt={"20px"}>
             {
                 data.map((value , index) => { 
                     return (
-                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar>
-                                        <ImageIcon />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText primary={value["date"]} secondary={ value['summary']} />
-                            </ListItem>
-                            
-                        </List>
+                        
+                        <Box
+                            alignContent={"center"}
+                            justifySelf={"center"}
+                            justifyContent={'center'}
+                            color={"blue"}
+                            sx={{
+                                width: 300,
+                                height: 300,
+                                backgroundColor: "lightblue",}}
+                            //     '&:hover': {
+                            //         backgroundColor: "white",
+                            //         opacity: [0.9, 0.8, 0.7],
+                            //     },
+                            // }}
+                        >
+                            <Typography>
+                                {value["date"]}
+                            </Typography>
+                        </Box>
+                       
                     )
                 })
             }    
-        </div>
+        </Stack>
     );
 }
 
