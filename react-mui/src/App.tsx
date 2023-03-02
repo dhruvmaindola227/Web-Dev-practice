@@ -1,131 +1,51 @@
 import * as React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { styled, useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { useState } from 'react';
-import {
-  Stack,
-  Button,
-  TextField,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Autocomplete,
-  FormGroup,
-  Checkbox,
-} from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Cancel';
 
-type Inputs = {
-  firstname: string;
-  lastname: string;
-  address: string;
-  gender : string
-  exampleRequired: string;
-};
+interface ITabs {
+  tab: string[];
+}
 
-export default function PersistentDrawerLeft() {
-  const departments = [{ label: "HR" }, { label: "IT" }, { label: "FINANCE" }];
-  const theme = useTheme();
-  const [gender, setGender] = useState("other");
-  const [isSelected, setSelected] = useState(false);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGender(event.target.value);
-    console.log(event.target.value);
+export default function BasicTable(props: ITabs) {
+  const tabList = props.tab;
+  const [bits , setBits] = React.useState(tabList.map((tab) => false));
+
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    setValue
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack
-        spacing={3}
-        marginLeft={"50px"}
-        marginRight={"50px"}
-        marginTop={"30px"}
-      >
-        
-        <Stack spacing={2} direction="row" marginTop={"50px"}>
-          <TextField
-            {...register("firstname")}
-            variant="outlined"
-            label={"First Name"}
-            fullWidth
-          ></TextField>
-          <TextField
-            variant="outlined"
-            label={"Last Name"}
-            fullWidth
-            {...register("lastname")}
-          ></TextField>
-        </Stack>
-        <TextField
-          variant="outlined"
-          label={"Address"}
-          {...register("address")}
-        ></TextField>
-
-        <FormControl >
-          <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            name="radio-buttons-group"
-            row
-            value={gender}
-            onChange={handleChange}
-          >
-
-            <FormControlLabel
-              value="female"
-              control={<Radio />}
-              label="Female"
-              onClick={() => {
-                setValue("gender", gender)
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs value={value} onChange={handleChange}>
+          {tabList.map((tabName, index) => (
+            <Tab
+              label={tabName}
+              key={index}
+              iconPosition="end"
+              icon={bits[index] == true ? <CloseIcon/> : ""}
+              onMouseEnter={() => { 
+                setBits(bits.map((item , i) => {
+                  if (i === index) {
+                    return true;
+                  }
+                  return false;
+                }));
+                console.log(index);
               }}
-              />
-            
-            
-            <FormControlLabel
-              value="male"
-              control={<Radio />}
-              label="Male"
-              onClick={() => setValue("gender", gender)}
-            />
-            <FormControlLabel
-              value="other"
-              control={<Radio />}
-              label="Other" 
-              onClick={() => setValue("gender", gender)}
-            />
-          </RadioGroup>
-        </FormControl>
-
-        <Autocomplete
-          disablePortal
-          fullWidth
-          id="combo-box-demo"
-          options={departments}
-          renderInput={(params) => (
-            <TextField {...params} label="Departments" />
-          )}
-        />
-        <Typography variant={"h6"}>Favourite subject</Typography>
-        <FormGroup row>
-          <FormControlLabel control={<Checkbox />} label="ReactJs" />
-          <FormControlLabel control={<Checkbox />} label="Java" />
-        </FormGroup>
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
-      </Stack>
-    </form>
+              onMouseLeave={() => {
+                setBits(
+                  bits.map((item,i) => {
+                    return false;
+                  })
+                )
+                console.log("on mouseover" + index);
+              }}
+            ></Tab>
+          ))}
+        </Tabs>
+      </Box>
+    </Box>
   );
 }
