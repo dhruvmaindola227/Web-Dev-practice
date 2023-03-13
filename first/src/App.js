@@ -1,26 +1,31 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+
 
 const RegisterForm = () => {
-  const { register, handleSubmit } = useForm();
-  const handleRegistration = (data) => console.log(data);
-
+  const [text, setText] = useState("");
   return (
-    <form onSubmit={handleSubmit(handleRegistration)}>
+    <>
       <div>
-        <label>Name</label>
-        <input name="name" {...register("name")} />
+        <button>Add number</button>
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            console.log(text);
+          }}
+        ></input>
+        <button>Remove Number</button>
+        <button>Add number</button>
       </div>
       <div>
-        <label>Email</label>
-        <input type="email" name="email" {...register("email")} />
+        <ul>
+          <li>
+            asd
+          </li>
+        </ul>
       </div>
-      <div>
-        <label>Password</label>
-        <input type="password" name="password" {...register("password")} />
-      </div>
-      <button>Submit</button>
-    </form>
+    </>
   );
 };
 export default RegisterForm;

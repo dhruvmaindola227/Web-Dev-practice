@@ -1,22 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import WordsCall from './WordsCall';
-import './Index.css'
-
+import App from './App';   
+import { Provider } from 'react-redux';
+import store from './Store/Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-  <div className='mukesh'>
+// ** Provider makes sure that the entire application has the things it has. 
+// ** For example the store we provide to it will be available for use throughout the application because of the "Provider".  
+  <Provider store={store}>
     <App />
-    <WordsCall/>
-  </div>
-    
-  // </React.StrictMode>
+  </Provider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 
