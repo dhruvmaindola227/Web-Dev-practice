@@ -3,9 +3,9 @@ import numberSlice from "./Slices/NumberSlice";
 
 // ** This is tied to the NumberSlice.js slice we created because we gave that in the reducer object.
 const store = configureStore({
-    reducer: {
-        numbers: numberSlice,
-    },
+  reducer: {
+    numbers: numberSlice,
+  },
 });
 
-export default store; 
+export default store;

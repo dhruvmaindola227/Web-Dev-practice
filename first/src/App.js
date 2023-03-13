@@ -1,12 +1,27 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { addNumber } from './Store/Slices/NumberSlice'; 
+import DisplayNumbers from '../src/Components/DisplayNumbers';
 
 const RegisterForm = () => {
   const [text, setText] = useState("");
+  const dispatch = useDispatch();
+
+  const addNewNumber = (number) => {
+    dispatch(addNumber(number));
+  };
+
+
   return (
     <>
       <div>
-        <button>Add number</button>
+        <button
+          onClick={() => {
+            addNewNumber(Math.floor(Math.random() * 10));
+          }}
+        >
+          Add number
+        </button>
         <input
           type="text"
           value={text}
@@ -16,13 +31,11 @@ const RegisterForm = () => {
           }}
         ></input>
         <button>Remove Number</button>
-        <button>Add number</button>
+        <button>Remove All numbers</button>
       </div>
       <div>
         <ul>
-          <li>
-            asd
-          </li>
+          <DisplayNumbers/>
         </ul>
       </div>
     </>
